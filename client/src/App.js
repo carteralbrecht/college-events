@@ -19,7 +19,7 @@ class App extends Component {
   render() {
     return <Router>
       <Switch>
-        <Route exact path="/signIn" component={SignIn} />
+        <Route exact path="/" component={SignIn} />
         <Route exact path="/404" component={NotFoundPage} />
         <Redirect to="/404" />
       </Switch>
