@@ -8,7 +8,7 @@ module.exports = router => {
     router.get("/user/:userId", users.findOne);
 
     // Update a single user
-    // router.put("/user/:userId", users.update);
+    router.put("/user/:userId", users.update);
 
     // Delete a single user
     // router.delete("/user/:userId", users.delete);
