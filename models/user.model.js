@@ -67,4 +67,22 @@ User.updateById = (userId, user, result) => {
     );
 }
 
+User.remove = (userId, result) => {
+    sql.query("DELETE FROM user WHERE id = ?", userId, (err, res) => {
+        if (err) {
+            console.log(err);
+            result(null, err);
+            return;
+        }
+
+        if (res.affectedRows) {
+            console.log("deleted user with id: ", userId);
+            result(null, res);
+            return;
+        }
+
+        result({kind: "not_found"}, null);
+    });
+};
+
 module.exports = User;

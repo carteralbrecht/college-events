@@ -11,5 +11,5 @@ module.exports = router => {
     router.put("/user/:userId", users.update);
 
     // Delete a single user
-    // router.delete("/user/:userId", users.delete);
+    router.delete("/user/:userId", users.delete);
 };
