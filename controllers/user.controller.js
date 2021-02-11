@@ -14,9 +14,11 @@ exports.create = (req, res) => {
     });
 
     User.create(user, (err, data) => {
-        if (err)
+        if (err) {
             res.status(500).send({message: err.message});
-        res.send(data);
+        } else {
+            res.send(data);
+        }
     })
 }
 
