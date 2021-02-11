@@ -3,5 +3,6 @@ const router = express.Router();
 
 require("./user.routes")(router);
 require("./school.routes")(router);
+require("./event.routes")(router);
 
 module.exports = router;
