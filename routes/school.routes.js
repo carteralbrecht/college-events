@@ -7,6 +7,8 @@ module.exports = router => {
     // Retrieve a single school
     router.get("/school/:schoolId", school.findOne);
 
+    router.get("/school", school.findAll);
+
     // Update a single school
     router.put("/school/:schoolId", school.update);
 

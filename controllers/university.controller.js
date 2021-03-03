@@ -37,6 +37,22 @@ exports.findOne = (req, res) => {
     });
 };
 
+exports.findAll = (req, res) => {
+    University.findAll((err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `No universities found`
+                });
+            } else {
+                res.status(500).send({
+                    message: `Error retrieving universities`
+                });
+            }
+        } else res.send(data);
+    });
+};
+
 exports.update = (req, res) => {
     if (!req.body) {
         res.status(400).send({message: "Content can not be empty"});

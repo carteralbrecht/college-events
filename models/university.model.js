@@ -19,6 +19,24 @@ University.create = (newUniversity, result) => {
     });
 }
 
+University.findAll = (result) => {
+    sql.query(`SELECT U.name, U.id FROM University U`, (err, res) => {
+        if (err) {
+            console.log(err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("found Universities: ", res);
+            result(null, res);
+            return;
+        }
+
+        result({kind: "not_found"}, null);
+    });
+};
+
 University.findById = (UniversityId, result) => {
     sql.query(`SELECT * FROM University WHERE id = ${UniversityId}`, (err, res) => {
         if (err) {

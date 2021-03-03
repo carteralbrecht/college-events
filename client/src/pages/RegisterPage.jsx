@@ -1,5 +1,15 @@
 import React from "react";
-import {Button, Container, FormControl, Input, InputLabel, Paper, Typography} from "@material-ui/core";
+import {
+    Button,
+    Container,
+    FormControl,
+    Input,
+    InputLabel,
+    MenuItem,
+    Paper,
+    Select,
+    Typography
+} from "@material-ui/core";
 import {withRouter} from "react-router-dom";
 
 class RegisterPage extends React.Component {
@@ -10,8 +20,32 @@ class RegisterPage extends React.Component {
             lastName: "",
             email: "",
             password: "",
-            confirmPassword: ""
+            confirmPassword: "",
+            universities: [],
+            selectedUniversity: undefined
         }
+    }
+
+    async updateUniversities() {
+        const response = await fetch('/api/school', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (response.status !== 200) {
+            return;
+        }
+
+        const universities = await response.json();
+
+        this.setState({universities: universities});
+    }
+
+    async componentDidMount() {
+        await this.updateUniversities();
     }
 
     handleChange = e => {
@@ -46,6 +80,18 @@ class RegisterPage extends React.Component {
         this.props.history.push('/');
     }
 
+    renderUniversities() {
+        return this.state.universities.map((university, index) => {
+            return (
+                <MenuItem
+                    label="Select a University"
+                    value={university.id}>
+                    {university.name}
+                </MenuItem>
+            )
+        })
+    }
+
     render() {
         return (
             <Container maxWidth="sm" style={{marginTop: '5rem'}}>
@@ -54,7 +100,8 @@ class RegisterPage extends React.Component {
                     <div>
                         <FormControl style={{width: '100%'}}>
                             <InputLabel htmlFor="firstName">First Name</InputLabel>
-                            <Input id="firstName" type="text" value={this.state.firstName} onChange={this.handleChange}/>
+                            <Input id="firstName" type="text" value={this.state.firstName}
+                                   onChange={this.handleChange}/>
                         </FormControl>
                     </div>
                     <div>
@@ -72,13 +119,23 @@ class RegisterPage extends React.Component {
                     <div>
                         <FormControl style={{width: '100%'}}>
                             <InputLabel htmlFor="password">Password</InputLabel>
-                            <Input id="password" type="password" value={this.state.password} onChange={this.handleChange}/>
+                            <Input id="password" type="password" value={this.state.password}
+                                   onChange={this.handleChange}/>
                         </FormControl>
                     </div>
                     <div>
                         <FormControl style={{width: '100%'}}>
                             <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
-                            <Input id="confirmPassword" type="password" value={this.state.confirmPassword} onChange={this.handleChange}/>
+                            <Input id="confirmPassword" type="password" value={this.state.confirmPassword}
+                                   onChange={this.handleChange}/>
+                        </FormControl>
+                    </div>
+                    <div>
+                        <FormControl style={{width: '100%'}}>
+                            <InputLabel htmlFor="select">University</InputLabel>
+                            <Select id="select" value={this.state.selectedUniversity} onChange={this.handleChange}>
+                                {this.renderUniversities()}
+                            </Select>
                         </FormControl>
                     </div>
                     <div>
