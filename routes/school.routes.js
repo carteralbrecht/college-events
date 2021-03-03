@@ -1,5 +1,5 @@
 module.exports = router => {
-    const school = require("../controllers/school.controller.js");
+    const school = require("../controllers/university.controller.js");
 
     // Create a new school
     router.post("/school", school.create);

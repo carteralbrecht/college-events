@@ -1,4 +1,4 @@
-const School = require('../models/school.model.js');
+const University = require('../models/university.model.js');
 
 exports.create = (req, res) => {
     if (!req.body) {
@@ -6,13 +6,13 @@ exports.create = (req, res) => {
         return;
     }
 
-    const school = new School({
+    const university = new University({
         name: req.body.name,
-        lat: req.body.lat,
-        lon: req.body.lon
+        image_url: req.body.image_url,
+        Location_id: req.body.Location_id,
     });
 
-    School.create(school, (err, data) => {
+    University.create(university, (err, data) => {
         if (err) {
             res.status(500).send({message: err.message});
         } else {
@@ -22,15 +22,15 @@ exports.create = (req, res) => {
 }
 
 exports.findOne = (req, res) => {
-    School.findById(req.params.schoolId, (err, data) => {
+    University.findById(req.params.universityId, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found school with id ${req.params.schoolId}`
+                    message: `Not found university with id ${req.params.universityId}`
                 });
             } else {
                 res.status(500).send({
-                    message: `Error retrieving school with id ${req.params.schoolId}`
+                    message: `Error retrieving university with id ${req.params.universityId}`
                 });
             }
         } else res.send(data);
@@ -43,17 +43,17 @@ exports.update = (req, res) => {
         return;
     }
 
-    School.updateById(req.params.schoolId,
-        new School(req.body),
+    University.updateById(req.params.universityId,
+        new University(req.body),
         (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
                     res.status(404).send({
-                        message: `Not found school with id ${req.params.schoolId}`
+                        message: `Not found university with id ${req.params.universityId}`
                     });
                 } else {
                     res.status(500).send({
-                        message: `Error updating school with id ${req.params.schoolId}`
+                        message: `Error updating university with id ${req.params.universityId}`
                     });
                 }
             } else res.send(data);
@@ -61,17 +61,17 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-    School.remove(req.params.schoolId, (err, data) => {
+    University.remove(req.params.universityId, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
-                    message: `Not found school with id ${req.params.schoolId}`
+                    message: `Not found university with id ${req.params.universityId}`
                 });
             } else {
                 res.status(500).send({
-                    message: `Error deleting school with id ${req.params.schoolId}`
+                    message: `Error deleting university with id ${req.params.universityId}`
                 });
             }
-        } else res.send({message: `school deleted successfully`});
+        } else res.send({message: `university deleted successfully`});
     });
 };

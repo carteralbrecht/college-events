@@ -10,7 +10,7 @@ exports.create = (req, res) => {
         password: req.body.password,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
-        type: req.body.type
+        University_id: req.body.University_id
     });
 
     User.create(user, (err, data) => {
@@ -32,6 +32,22 @@ exports.findOne = (req, res) => {
             } else {
                 res.status(500).send({
                     message: `Error retrieving user with id ${req.params.userId}`
+                });
+            }
+        } else res.send(data);
+    });
+};
+
+exports.findByEmailPassword = (req, res) => {
+    User.findByEmailPassword(req.body.email, req.body.password, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    message: `Not found user`
+                });
+            } else {
+                res.status(500).send({
+                    message: `Error retrieving user`
                 });
             }
         } else res.send(data);

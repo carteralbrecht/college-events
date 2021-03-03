@@ -7,6 +7,8 @@ module.exports = router => {
     // Retrieve a single user
     router.get("/user/:userId", users.findOne);
 
+    router.post("/user/login", users.findByEmailPassword);
+
     // Update a single user
     router.put("/user/:userId", users.update);
 

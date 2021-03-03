@@ -5,7 +5,7 @@ const User = function(user) {
     this.password = user.password;
     this.firstname = user.firstname;
     this.lastname = user.lastname;
-    this.type = user.type;
+    this.University_id = user.University_id;
 };
 
 User.create = (newUser, result) => {
@@ -20,6 +20,24 @@ User.create = (newUser, result) => {
         result(null, {id: res.insertId, ...newUser});
     });
 }
+
+User.findByEmailPassword = (email, password, result) => {
+    sql.query(`SELECT * FROM User WHERE User.email = '${email}' AND User.password = '${password}'`, (err, res) => {
+        if (err) {
+            console.log(err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            console.log("found user: ", res[0]);
+            result(null, res[0]);
+            return;
+        }
+
+        result({kind: "not_found"}, null);
+    });
+};
 
 User.findById = (userId, result) => {
     sql.query(`SELECT * FROM user WHERE id = ${userId}`, (err, res) => {
